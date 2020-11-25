@@ -1,0 +1,111 @@
+/**********************************************************
+* hw4: Binary Search Tree
+* Comp 15
+* README
+* Modified by: Emily Gjertsson (Egjert01) March 2020
+*
+*********************************************************/
+
+Compile/run (FOR PART 1):
+     - The final program:  
+            compile with: make
+            run with: ./hw4
+            
+     - The test file: 
+            compile with: make tester 
+            run with: ./tester
+
+
+Program Purpose: To make a class that will allow the client to interact with a 
+Binary Search Tree in the following ways: They can find the minimum and maximum 
+in the trees, they can see if the tree contains a specific value, they can 
+insert a value, they can remove a value, they can see how many nodes are in the 
+tree, add all the values of those nodes up, and finally retrieve the height of 
+the tree.
+    
+
+Acknowledgements: 
+    TA's: Miles, Mike, Viet
+    Websites: 
+        campuswire
+        I did a lot of research on the removal of nodes, because I ran into a 
+            lot of issues with that:
+        http://www.algolist.net/Data_structures/Binary_search_tree/Removal
+        http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/9-BinTree/BST-
+            delete2.html
+        https://webdocs.cs.ualberta.ca/~holte/T26/del-from-bst.html
+    Other: We did a project on binary search trees in COMP11, so I recycled 
+            some concepts from that 
+
+Files: 
+    BinarySearchTree.cpp: Implementation of the BinarySearchTree class. 
+Holds the functions that manipulate the Binary Search Tree objects, by copying 
+and deleting elements, and performing calculations using these elements like 
+adding them all up, counting all of the nodes, and some other functions. 
+    
+    BinarySearchTree.h: Interface of the BinarySearchTree class.
+    
+    hw4.cpp: The file from which the program will be run. Holds only the main 
+function and a call to the only public function in the RPNCalc which simply 
+starts running the program. 
+
+    test.cpp: A separate file with a main function used to test every function 
+made in the BinarySearchTree class. See below for more information on testing.
+    NOTE: all functions were made public to run this file, so it won't work 
+unless they are made public again
+
+    Makefile: holds the recipes for compiling and running the program
+
+
+
+Data Structures: For this assignment we were implementing a binary search tree.
+This data structure is useful for functions like min and max (just find the 
+bottom, left-most node and that will be the min, and do the opposite for max).
+It also made deletion simple, because if the client wants to remove a node with 
+two children, all you have to do is replace it with the node of the smallest 
+value in the right tree, which will be the node with the most middle value in 
+the tree maintaining the BST invariant. Binary Search Trees are also useful 
+because searching only takes a time complexity of O(log n).
+
+
+Testing:
+
+Bugs I ran into: 
+    1. I ran into a lot of issues with recursion (so this homework was 
+definitely useful for me!). Small things that just took me a little bit of time 
+to debug like forgetting to return the recursive function call, and I would just
+print a lot of statements to the terminal until i could identify exactly what 
+was giving me issues.
+    2. Twice I ran into the issue of passing in the root and adjusting the value
+of the pointer instead of the value the pointer points to, as Viet put it. That 
+came up when I was working on my insert function and testing my delete_post_
+order function. I fixed this by using checking if it was the root that needs 
+to get a value (inserting to an empty tree) and directly making a node off the 
+root instead of using the passed in value. This was the issue that both Miles 
+and Mike helped me really understand.
+    3. I ran into so many issues with my remove function. I had a hard time 
+at first just visualizing what was supposed to happen, so I went through a
+couple different attempts for this function until I arrived at the version I 
+have now. The biggest issue I ran into with this was there was one place where I
+had forgotten to change node->left to node->right, and it took me a really 
+long time to figure out what was going on. To find this error you can see in my 
+test file that I have two different functions testing my delete function. In the
+testRemoveSmall I made a new object and added elements every time I ran the 
+program to find exactly where the issue was coming from, and to make sure that 
+the functionality was right. It was this combined with a million print 
+statements that finally brought me to the solution. 
+    4. Early on in coding when I was still working on my insert function I ran 
+into a mysterious error that I had never seen before in my terminal, and after 
+a little bit of consideration and trying to deduce the clang++ message, I 
+realized that I had named a variable the same as one of my functions which was 
+causing the error to appear.
+
+General Testing: I made a separate file called test.cpp and made all of my 
+private functions public for testing purposes, then proceeded to test all of 
+the functions that I made in my BinarySearchTree, either directly or indirectly
+(as they are being used by the functions that I made tests for). I did this 
+by creating a couple different versions of my BinarySearchTree objects, one that
+was given to us in the hw4.cpp file, and two more smaller versions that I would 
+mess around with more.
+
+
