@@ -1,0 +1,64 @@
+/*********************************************************
+* hw2: Cheshire ConCATenation −  Time To Get Linked Up In Fur 
+* Comp 15 Spring 2020
+* README
+* Author: Emily Gjertsson
+*
+*********************************************************/
+
+PROGRAM PURPOSE: Practice creating an implementing doubly linked lists to 
+allow a user to interact with and create strings after runtime starts.
+
+
+ACKNOWLEDGEMENTS: 
+TA'S: Jackson
+Websites: the course website on copy constructors and assignment operator 
+overload. Also the wikipedia document linked on the course calendar.
+Help with Assignment operator overload: https://www.geeksforgeeks.org/g-fact-38/
+
+The function contracts were taken from the comp15 assignment spec.
+README template by Hayden Wolff.
+
+
+FILES:
+    testCharLinkedList.cpp: exclusively a testing file, that has a testing 
+        function associated with every file in CharArrayList.cpp.
+    
+    CharLinkedList.cpp: Implementation of the CharArrayList.cpp, which allows 
+        the user to manipulate and change an array after runtime starts. along 
+        with an assignment operator, it has three constructors - default, one 
+        that creates an array with the capacity of one, and another that creates
+        an array with a given capacity. 
+    
+    CharLinkedList.h: interface of CharArrayList class
+
+
+HOW TO COMPILE/LINK/RUN:
+    Compile and link with: make charLinkedList
+    run with: ./charLinkedList
+
+
+DATA STRUCTURES
+---------------
+The data structure used in this homework was a doubly-linked list. 
+
+
+TESTING
+-------
+To test my program I created a testing file in which I grouped together similar
+functions from the CharLinkedList.cpp into other functions for testing.
+I test each one at a time to make debugging simple.
+Using cout statements allowed me to check for unexpected output, and it also 
+allowed me to ensure that my errors were working as expected.
+
+Within my testing file, I created four objects, one for every type of 
+constructor (plus one to test the concatenate function), and tested all of the 
+functions on each of them. 
+
+EXTRA INFORMATION 
+-----------------
+Something weird happens when I call my "find" function: the implementation 
+works but it forces my destructor into an infinite loop. I didn't have time 
+to debug this, but if I had more time I think it has something to do with my
+copy constuctor so I would start there.
+
