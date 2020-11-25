@@ -1,0 +1,31 @@
+%%%
+%%% Test bigger commands
+%%%
+%%% Try out my if functionality and nested rstrings (using exec on those
+%%% strings). I already know that the file command works because that it what I 
+%%% used to implement these files.
+%%%
+%%% Author:  Emily Gjertsson, Tufts University, Spring 2020
+%%%
+
+3                   % push 3 onto the stack
+4                   % push 4 onto the stack
+<                   % compare to see if 3 < 4 (should push #t)
+print
+{ { trueCase } }    % rstring letting me know that the true case was chosen
+{ { falseCase } }   % rstring letting me know that the false case was chosen
+if                  % pops bool, true case, and false case off the stack and 
+                        % should push the true case back on the stack
+print
+
+{ 4 { 5 5 + } }    % push this nested rstring onto the stack
+print              % prints the full rstring
+
+exec               % pushes 4 onto the stack
+print              % should print { 5 5 + }
+
+exec               % does the calculation, pushes 10 onto the stack
+print 
+
++                  % adds 10 and 4, pushes 14 onto the stack
+print

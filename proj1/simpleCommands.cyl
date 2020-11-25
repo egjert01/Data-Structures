@@ -1,0 +1,42 @@
+%%%
+%%% Test simple commands
+%%%
+%%% Tests pushing numbers and performing mathematical operations on them 
+%%% including addition, multiplication, and mod but also a comparison "<"
+%%% 
+%%% Also tests the clear and drop functions, and makes sure the error message 
+%%% works. Finally, tests "not" which inverses a boolean. 
+%%%
+%%% Author:  Emily Gjertsson, Tufts University, Spring 2020
+%%%
+
+5               % push 5 onto the stack 
+4               % push 4 onto the stack
++               % add 4 and 5 (Should be 9)
+print
+3               % push 3 onto the stack 
+/               % divide 9 by 3 (result should be 3)
+print
+7               % push 7 onto the stack
++               % add 7 and 3 (result should be 10)
+print
+7               % add 7 onto the stack
+*               % multiply 7 and 3 (result should be 70)
+print
+4               % push 4 onto the stack
+mod             % calculate remainder of 70/4 (result should be 2)
+print
+5               % push 5 onto the stack
+print
+swap            % Swap the top two elements of the stack ( 2 should be on top)
+print
+drop            % Remove the 2 from the stack (5 should be printed next)
+print 
+clear           % Remove the 5, the next print statement should send an error
+print 
+4               % push a 4 onto the stack
+3               % push a 3 onto the stack
+<               % check if 4 is less than 3, push the bool onto the stack
+print           % should be #f
+not             % push the inverse onto the stack 
+print           % should be #t

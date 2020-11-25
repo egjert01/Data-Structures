@@ -1,0 +1,159 @@
+/**********************************************************
+* Project 1: CalcYouLater
+* Comp 15
+* README
+* Modified by: Emily Gjertsson (Egjert01) February 2020
+*
+*********************************************************/
+
+Compile/run (FOR PART 1):
+     - The final program:  
+            compile with: make
+            run with: ./calcYouLater
+            
+     - The test for DatumStack: 
+            compile with: make testDatumStack
+            run with: ./testDatumStack
+
+    - The test for RPNCalc:
+            compile with: make testRPNCalc
+            run with: ./testRPNCalc
+
+
+Program Purpose:
+    Practice using vectors to create a stack that the client can use to 
+    implement an RPN calculator. This will allow the user to add numbers, 
+    booleans, and rstrings to the stack and perform operations on them. 
+    
+    Basic operations like addition and multiplication, but also more complicated
+    like inputting a file that will be read from, and essentially using an 
+    if statement.
+
+
+Acknowledgements: 
+    TA's: Kevin
+    Websites: 
+        campuswire
+        Getting the last element of a string: https://stackoverflow.com/
+                        questions/4884548/get-the-last-element-of-a-stdstring
+        
+    
+
+
+Files: 
+
+    DatumStack.cpp: Implementation of the DatumStack class. Dictates how the 
+client can interact with a vector: the user can only work with the back so that 
+the vector is essentially a stack.
+                                                             
+    DatumStack.h: Interface of DatumStack class
+
+    testDatumStack.cpp: A separate file with a main function used to test every 
+function made in the DatumStack class. See below for more information on 
+testing.
+
+    RPNCalc.cpp: Implementation of the RPNCalc class. It is what makes the 
+program work like a calculator, and allows the user to interact with the 
+calculator. Takes in input from cin, and runs whatever the user is asking 
+it to run. Examples of things the user can do: add numbers to the stack, 
+perform mathematical equations on those numbers, compare the numbers (<, >), 
+work with booleans and create if statements. 
+    
+    RPNCalc.h: Interface of RPNCalc class
+    
+    testRPNCalc.cpp: A separate file with a main function used to test several 
+functions made in the RPNCalc class. It is not as fleshed out because the 
+majority of the testing was submitting commands into terminal and using cout 
+statements throughout the program to find bugs and make sure functions were 
+working.
+    NOTE: all functions were made public to run this file, so it won't work 
+unless they are made public again
+
+    main.cpp: The file from which the program will be run. Holds only the main 
+function and a call to the only public function in the RPNCalc which simply 
+starts running the program. 
+    
+    
+    Makefile: holds the recipes for compiling and running the program
+
+
+
+Data Structures:
+I used the <vector> class because it can change on runtime, and it is relatively
+easy to implement. 
+The vector class essentially changed into a stack with the implementation of 
+the DatumStack class, so that the user could only access the top of the stack.
+This is important because for this type of calculator the user should not be 
+able to mess with the order. 
+
+Stacks are useful in many situations because of their first in last out
+characteristic (meaning that the user can only access the top of the stack)
+Two more problems that could be solved using a stack: 
+ 1. Stack-based memory system (the way that the stack memory works for running 
+ computer programs, main is pushed on the stack, then the functions main calls 
+ are pushed onto the stack, then as soon as those are finished running they are 
+ popped off the stack, main finishes running and is also popped off the stack 
+ and then the program is finished running when the stack is empty)
+ 2. Stacks can be used if I wanted to reverse a string (push the string onto 
+ the stack from start to end, and then print the string as the elements are 
+ popped off the stack)
+
+Testing:
+
+TESTING DATUMSTACK CLASS:
+To test my DatumStack class I created a new make target. Then, in my test file 
+I initialized two objects to make sure both constructors
+were functional. Then I went through the rest of my functions testing them on
+both objects, and throwing errors when they are called for (mostly by the 
+default stack, the function calls that would cause errors are commented out).
+I also tested my functions some times in the DatumStack itself while I was 
+writing the functions themselves to debug. Instead of having one function in 
+my testing file per function in the DatumStack.cpp I had multiple for many, 
+and called functions in other functions. For example, the isEmpty() function is
+tested within the top() function which I have a function to test in the 
+testDatumStack file. 
+To test the parser function, I wrote another make target so that I could include
+a main function in the .cpp file. I tested my parser function by using cin and 
+a test file as my istreams. I also included coutstatements in each of my if 
+statements and another one in my main function to cout the returned string. 
+
+TESTING RPNCALC:
+    Bugs I ran into:
+    1. I was having issues with the spacing in my parser, because instead of 
+printing { drop { 4 5 + } }, I realized I was printing { d r o p { 4 5 + } } or 
+when I tried to fix that (by removing the spaces after every character) the 
+program would print { drop { 45+ } }. I realized that it was because I was 
+reading in the rstring character by character instead of string by string.
+    2. DatumStack bug: The TA who looked at my DatumStack class for part1 of 
+the project pointed out that there was a bug in my program causing all sorts of 
+memory issues. After going through my code for a while I realized that it was 
+because I hadn't initialized the length of an empty stack to 0. This also caused
+a major issue when I was working on the RPNCalc that I had been working on 
+finding for a really long time. I was getting a garbage value for the size of 
+my stack, so every now and then I would get an out of range error because I was 
+trying to access the 12312823179th element of the stack. Once I fixed this minor
+bug, that one went away as well. 
+    3. Extra space at the end of the rstring. I had an issue where when I tried 
+to access the last element of an rstring to make sure that it was a bracket, the
+program would give me white space which was confusing to me until I realized 
+that the way my parser program worked was that it would add a space at the end 
+as well. I thought about it and what the rest of my program would need and 
+decided that it would not affect anything else in my program, so I just 
+accounted for that extra space in checking for brackets and left it there. 
+
+    General Testing: 
+    The vast majority of the testing I did for my program was on-the-go. Every 
+time I made a function I would run it and check if the expected output came in 
+the terminal. I have also included the testRPNCalc function which tests to make 
+sure the object can be made and test it on some simpler functions. 
+    I have also included some cyl files, the bracketsTest.cyl was my test file 
+to make sure my parser was working, by trying different combinations of matching 
+and non-matching brackets to try to break my program until I was confident that 
+it was working. I also have a cyl file that includes all of the simple commands.
+I used this to make sure that the elements were getting processed (for / mod and
+ -) in the correct order. For these files I wrote out what I though the stack 
+ looked like and what I expected the output to be and comapred that to the 
+ output that the computer gave me. Finally, I made a bigCommands.cyl function 
+ to try out my if functionality and nested rstrings (using exec on those
+ strings). I already knew that the file command works because that it what I 
+ used to implement these files.
