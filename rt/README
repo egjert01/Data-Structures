@@ -1,0 +1,118 @@
+/**********************************************************
+* Project 2: Road Trip!
+* Comp 15
+* README
+* Modified by: Emily Gjertsson (Egjert01) April 2020
+*
+*********************************************************/
+
+Compile/run:
+     - To run the program itself:
+            compile with: make findpath
+            run with: ./findpath [data0.vdat] [data0.adat]
+     - The test for Graph class: 
+            compile with: make test
+            run with: ./test
+        
+
+Program Purpose:
+    Uses a graph data structure to map out the Floo Network from Harry Potter, 
+    which would allow the client to see all possible locations listed out, to 
+    calculate the physical distance from one to another, and to find a plausible
+    path from one to another via the floo network.
+
+
+Acknowledgements: 
+    **Graph class was originally written by Comp15 staff, which I then modified
+    TA's: Camille and Miles 
+    Websites: 
+        campuswire
+        https://astro.unl.edu/naap/motion1/tc_units.html
+        http://www.cplusplus.com/forum/beginner/57858/
+        https://stackoverflow.com/questions/36815937/valgrind-invalid-free-
+            delete-delete-realloc-in-c
+        https://iq.opengenus.org/print-all-the-paths-between-two-vertices/
+
+Files: 
+    main.cpp: The only thing the client needs to worry about is running the 
+program which is the only thing they should be able to access from the main 
+function
+
+    locationStruct.h: a file holding the Node struct which will function as the 
+vertices within the Graph. Contains the name of the location and its coordinates
+
+    Graph.cpp: Implementation of the Graph class. Dictates how the client can 
+interact with the graph. Handles everything from creating the Graph, to adding
+elements to it, keeping track of the edges, and will help with searching through
+the graph.
+                                                             
+    Graph.h: Interface of Graph class
+
+    testGraph.cpp: A separate file created in order to test that the class was 
+functional, so within this testing file I created a Graph object and used many 
+of the class methods on it to make sure they worked and that I understood how 
+everything worked within the class.
+
+    Driver.cpp: The file from which the program will be run. Reads from a file 
+and puts that data into a graph. Deals with commands inputted including: list, 
+finding geographical distances between two locations, and finding a path between
+the two locations via the flu network.
+
+    Driver.h: Interface of the Graph class
+    
+    Makefile: holds the recipes for compiling and running the program
+
+
+
+Data Structures:
+    For this project I will be using multiple data structures. The most 
+important data structure is a graph, which  the whole program will be built off 
+of. A graph is useful in this situation because of its map-like quality: that 
+is, in real life, there are multiple ways to get to different places which cost 
+a variety of amounts, and graphs are able to replicate this. Vertices/nodes 
+represent places, edges and their weights represent the way to get there and 
+how much it costs to get there (in time or otherwise).
+
+
+Testing:
+BUGS:
+    I couldn't figure out for a while why my dist function was outputting
+numbers that were very close but not quite right. After fiddling around with 
+the function, returning a variable, making sure that it would print a double,
+I realized that I needed to divide the minutes by 60.0 instead of 60, otherwise
+it would return an int instead of a double.
+    I ran into issues with my DFS function which had me stuck for a really long 
+time, and I have a hard time debugging recursive functions sometimes. I realized
+after a while of investigation that my problem occurred when I was reaching the 
+end of my DFS function and it was trying to move back up to the previous call. 
+I realized (and Miles confirmed) that it was because I was not returning 
+any integer at the bottom of the function which was giving me an illegal
+instruction.
+    My biggest bug was when I was adjusting the Graph class - I go into that 
+in the next paragraph
+
+TESTING GRAPH CLASS:
+    In order to use the graph class that had been written by the comp15 staff, 
+I had to make some changes. Most important of which was removing the template,
+because I knew that the graph would be working only with nodes, not with many
+different types of data. After making these changes I had to make sure that the
+class was still functional, and that I knew exactly how to use everything that 
+had been written which is why I created the testGraph.cpp file. It was through
+this that I realized I would have to initialize the graph with the right amount
+of vertices, because I can't add them later, so I would have to count the 
+number of locations in the file before adding them to the graph. Also when
+making my tester file I kept running into segmentation faults when I was trying
+to access my structs "city" element, while I wasn't for the other elements, 
+so I tried tweaking so many things, at which point I went to office hours and 
+Camille realized that it was because I had named my struct "Location" which is 
+the same name as one of the files that was given to us. 
+
+General Testing: 
+    Most of my testing consists of cout statements scattered throughout all of 
+my functions, to make sure that the flow control is working out how I expect, 
+and variables contain the values that I expect them to. 
+    With the path query, I tested step by step: every time I added an element 
+I would test it. For example, when I was working on the neighbors element I 
+would comment everything else out and print out the neighbors vertex both 
+within the function that was creating it and also once it was back in the DFS 
+function to make sure that it was working and transferred properly.
